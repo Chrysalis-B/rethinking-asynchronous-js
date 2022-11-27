@@ -1,10 +1,10 @@
 function fakeAjax(url,cb) {
-	var fake_responses = {
+	const fake_responses = {
 		"file1": "The first text",
 		"file2": "The middle text",
 		"file3": "The last text"
 	};
-	var randomDelay = (Math.round(Math.random() * 1E4) % 8000) + 1000;
+	const randomDelay = (Math.round(Math.random() * 1E4) % 8000) + 1000;
 
 	console.log("Requesting: " + url);
 
