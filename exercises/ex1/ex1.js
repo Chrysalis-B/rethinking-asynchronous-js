@@ -22,7 +22,7 @@ function output(text) {
 
 function getFile(file) {
 	fakeAjax(file, function (text) {
-		output(text);
+		handleResponse(file, text);
 	});
 }
 
@@ -30,3 +30,24 @@ function getFile(file) {
 getFile("file1");
 getFile("file2");
 getFile("file3");
+
+const responses = {};
+
+const handleResponse = (file, text) => {
+	if (!responses[file]) {
+		responses[file] = text;
+	}
+	const fileNames = ['file1', 'file2', 'file3'];
+	for (const fileName of fileNames) {
+		if (responses[fileName] !== undefined) {
+			if (typeof responses[fileName] === 'string') {
+				output(responses[fileName]);
+				responses[fileName] = false;
+			}
+		}
+		else {
+			return;
+		}
+	}
+	output('Complete');
+}
