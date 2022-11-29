@@ -1,10 +1,10 @@
 function fakeAjax(url,cb) {
-	var fake_responses = {
+	const fake_responses = {
 		"file1": "The first text",
 		"file2": "The middle text",
 		"file3": "The last text"
 	};
-	var randomDelay = (Math.round(Math.random() * 1E4) % 8000) + 1000;
+	const randomDelay = (Math.round(Math.random() * 1E4) % 8000) + 1000;
 
 	console.log("Requesting: " + url);
 
@@ -32,4 +32,11 @@ function getFile(file) {
 // but only once previous rendering
 // is done.
 
-// ???
+ASQ()
+	.runner(function*() {
+		const texts = [getFile('file1'), getFile('file2'), getFile('file3')];
+		for(let text of texts) {
+			output(yield text);
+		}
+		output('Complete!'); 
+	});
