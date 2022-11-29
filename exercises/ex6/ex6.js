@@ -1,16 +1,16 @@
-function fakeAjax(url,cb) {
-	var fake_responses = {
+function fakeAjax(url, cb) {
+	const fake_responses = {
 		"file1": "The first text",
 		"file2": "The middle text",
 		"file3": "The last text"
 	};
-	var randomDelay = (Math.round(Math.random() * 1E4) % 8000) + 1000;
+	const randomDelay = (Math.round(Math.random() * 1E4) % 8000) + 1000;
 
 	console.log("Requesting: " + url);
 
-	setTimeout(function(){
+	setTimeout(function () {
 		cb(fake_responses[url]);
-	},randomDelay);
+	}, randomDelay);
 }
 
 function output(text) {
@@ -20,8 +20,8 @@ function output(text) {
 // **************************************
 
 function getFile(file) {
-	return ASQ(function(done){
-		fakeAjax(file,done);
+	return ASQ(function (done) {
+		fakeAjax(file, done);
 	});
 }
 
@@ -32,4 +32,10 @@ function getFile(file) {
 // but only once previous rendering
 // is done.
 
-// ???
+ASQ()
+	.seq(
+		...['file1', 'file2', 'file3']
+			.map(getFile)
+			.map(seq => () => seq.val(output))
+	)
+	.val(() => output('Complete!'))
