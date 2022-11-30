@@ -1,10 +1,24 @@
-$(document).ready(function(){
+$(document).ready(function () {
 	var $btn = $("#btn"),
-		$list = $("#list");
+		$list = $("#list"),
+		clicks = ASQ.react.of(),
+		msgs = ASQ.react.of(),
+		clicked;
 
-	$btn.click(function(evt){
-		// TODO
+	$btn.click(function (evt) {
+		clicks.push(evt);
 	});
 
-	// TODO: setup sampled sequence, populate $list
+	clicks.val(evt => {
+		clicked = evt;
+	});
+
+	setInterval(() => {
+		if (clicked) {
+			msgs.push("clicked!");
+			clicked = null;
+		}
+	}, 1000);
+
+	msgs.val(msg => $list.append($("<div>" + msg + "</div>")))
 });
